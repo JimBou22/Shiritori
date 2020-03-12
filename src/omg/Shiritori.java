@@ -44,9 +44,11 @@ public class Shiritori{
 				char last = input.charAt(input.length() - 1);
 				if(list.get(i).charAt(0) == last) {
 					System.out.println(list.get(i));
+					list.remove(i);
 					break;
 				}
 			}
+			System.out.println(list.size());
 			
 		//replay with having to start with last letter of previous word
 			
