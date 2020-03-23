@@ -3,10 +3,18 @@ package app;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import omg.Shiritori;
+import javax.swing.JLabel;
 
 public class WordChainApp {
 
 	private JFrame frame;
+	Shiritori wordchain;
 
 	/**
 	 * Launch the application.
@@ -36,8 +44,21 @@ public class WordChainApp {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 741, 512);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JLabel lblNewLabel = new JLabel("New label");
+		frame.getContentPane().add(lblNewLabel, BorderLayout.NORTH);
+		
+		JButton btnNewButton = new JButton("Win Now");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				wordchain.winNow(frame);
+				//lblNewLabel.setText(text);
+			}
+		});
+		frame.getContentPane().add(btnNewButton, BorderLayout.EAST);
+		
+		
 	}
 
 }

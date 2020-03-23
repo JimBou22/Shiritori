@@ -1,16 +1,26 @@
 package omg;
 
 import java.util.*;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import java.io.*;
 
 public class Shiritori {
 	static boolean win = false;
 	static File file = new File("src/lib/american-words.95");
+	static File file2 = new File("src/lib/ReallyshortListofWords.txt");
 	static List<String> list = new ArrayList<String>();
 	static List<String> used = new ArrayList<String>();
+	private static int difficulty;
 
 	public static void main(String[] args) {
-
+		Scanner scc = new Scanner(System.in);
+		System.out.println("Welcome to the Word Chain Game!");
+		System.out.println("You know the rules :)");
+		System.out.println("Select Difficulty: 1 or 2");
+		difficulty = Integer.parseInt(scc.nextLine());
 		try {
 			// import/build dictionary of words
 			buildDictionary();
@@ -18,15 +28,14 @@ public class Shiritori {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-
+			scc.close();
 		}
 
 	}
 
 	private static void playFirst() {
 		// get user input from console with menu face
-		System.out.println("Welcome to the Word Chain Game!");
-		System.out.println("You know the rules :)");
+
 		System.out.println("Please enter a word");
 
 		Scanner sc = new Scanner(System.in);
@@ -51,27 +60,29 @@ public class Shiritori {
 				}
 			}
 			getListSize(list);
-			if (list.size() < 1 || list == null) {
-				win = true;
-			}
+			checkWin(prev);
 
 			// replay with having to start with last letter of previous word
 
 			playAgain(prev);
 
-			// win case/lose case
-			if (win == true) {
-				System.out.println("You cheated");
-				sc.close();
-				System.exit(0);
-			}
+
 		} else {
+			sc.close();
 			lose();
 		}
 	}
 
+
+
 	private static void buildDictionary() throws FileNotFoundException, IOException {
-		BufferedReader br = new BufferedReader(new FileReader(file));
+		BufferedReader br;
+		if(difficulty == 1) {
+			br = new BufferedReader(new FileReader(file));
+		} else {
+			br = new BufferedReader(new FileReader(file2));
+		}
+		
 		String s;
 		while ((s = br.readLine()) != null) {
 			list.add(s);
@@ -98,6 +109,11 @@ public class Shiritori {
 			lose();
 		}
 		
+		if(input.equalsIgnoreCase("win")) {
+			Shiritori s = new Shiritori();
+			s.winNow(null);
+		}
+		
 		if (!used.contains(input)) {
 			used.add(input);
 			Collections.shuffle(list);
@@ -113,20 +129,15 @@ public class Shiritori {
 				}
 			}
 			getListSize(list);
-			if (list.size() < 1 || list == null) {
-				win = true;
-			} else {
-				playAgain(prev1);
-			}
-
 			// win case/lose case
-			if (win == true) {
-				System.out.println("You cheated");
-				sc.close();
-				System.exit(0);
-			}
+			checkWin(prev1);
+			playAgain(prev1);
+
+			
 		} else {
+			sc.close();
 			lose();
+			
 		}
 	}
 
@@ -141,6 +152,20 @@ public class Shiritori {
 	
 	private static char lastChar(String prev) {
 		return prev.charAt(prev.length() - 1);
+	}
+	private static void checkWin(String prev) {
+		if (list.size() < 1 || list == null || prev.equals("")) {
+			win = true;
+		}// win case/lose case
+		if (win == true) {
+			System.out.println("You cheated");
+			System.exit(0);
+		}
+	}
+	
+	public void winNow(JFrame frame) {
+		JOptionPane.showMessageDialog(frame, "You cheated");
+		System.exit(0);
 	}
 
 }
