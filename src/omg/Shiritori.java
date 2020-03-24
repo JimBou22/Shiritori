@@ -53,7 +53,7 @@ public class Shiritori {
 			for (int i = 0; i < list.size(); i++) {
 				char last = input.charAt(input.length() - 1);
 				if (list.get(i).charAt(0) == last) {
-					System.out.println(list.get(i));
+					System.out.println("My word is " + list.get(i));
 					prev = list.get(i);
 					list.remove(i);
 					break;
@@ -92,8 +92,10 @@ public class Shiritori {
 	}
 
 	private static void playAgain(String prev) {
+		System.out.println("-------------------------------------------------");
 		System.out.println("Your previous word was " + prev);
 		System.out.println("Provide a word that starts with " + lastChar(prev));
+		System.out.println();
 		play(prev);
 	}
 
@@ -122,7 +124,7 @@ public class Shiritori {
 			for (int i = 0; i < list.size(); i++) {
 				char last = input.charAt(input.length() - 1);
 				if (list.get(i).charAt(0) == last) {
-					System.out.println(list.get(i));
+					System.out.println("My word is " + list.get(i));
 					prev1 = list.get(i);
 					list.remove(i);
 					break;
@@ -142,7 +144,7 @@ public class Shiritori {
 	}
 
 	private static void lose() {
-		System.out.println("You suck");
+		System.out.println("You lose");
 		System.exit(0);
 	}
 
@@ -158,7 +160,7 @@ public class Shiritori {
 			win = true;
 		}// win case/lose case
 		if (win == true) {
-			System.out.println("You cheated");
+			System.out.println("You cheated. No Winning Allowed!");
 			System.exit(0);
 		}
 	}
